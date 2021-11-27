@@ -27,9 +27,6 @@
     "@babel/plugin-proposal-optional-chaining": "7.16.0",
     "babel-loader": "8.2.3",
     "css-loader": "6.5.1",
-    "dayjs": "1.10.7",
-    "npm": "8.1.4",
-    "style-loader": "3.3.1",
-    "webpack-dev-server": "4.4.0"
+    "dayjs": "1.10.7"
   }
 }
