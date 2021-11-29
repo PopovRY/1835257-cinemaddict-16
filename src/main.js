@@ -45,8 +45,8 @@ renderTemplate(siteMainElement,createShowMoreButtonTemplate(),RenderPosition.BEF
 
 //Карточки в категории
 const sectionFilms = siteMainElement.querySelector('.films');
-const sectionTopRated = sectionFilms.querySelector('.films-list--extra:nth-child(2) .films-list__container');
-const sectionMostCommented = sectionFilms.querySelector('.films-list--extra:last-child .films-list__container');
+const sectionTopRated = sectionFilms.querySelector('#top_rated');
+const sectionMostCommented = sectionFilms.querySelector('#most_comm');
 
 
 renderTemplate(sectionTopRated, createFilmCardListTemplate(), RenderPosition.BEFOREEND);
