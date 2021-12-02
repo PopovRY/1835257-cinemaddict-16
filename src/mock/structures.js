@@ -154,5 +154,3 @@ export const generateFilm = () => (
     }
   }
 );
-
-export {generateFilm}
