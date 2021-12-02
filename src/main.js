@@ -4,8 +4,13 @@ import {createFilmCardListTemplate} from './view/film-card-view.js';
 import {createShowMoreButtonTemplate} from './view/more-button-view.js';
 import {createFilmsSectionTemplate} from './view/films-section-view.js';
 import {createPopupTemplate} from './view/film-popup-view.js';
+import {generateFilm} from './mock/structures.js';
 
 const FILM_CARD_COUNT = 5;
+const FILM_COUNT = 20;
+
+const films = Array.from({length: FILM_COUNT}, generateFilm);
+
 
 const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',
@@ -57,3 +62,5 @@ renderTemplate(sectionMostCommented, createFilmCardListTemplate(), RenderPositio
 //Вставил попап
 
 renderTemplate(siteMainElement,createPopupTemplate(),RenderPosition.BEFOREEND);
+
+
