@@ -100,7 +100,7 @@ export const createPopupTemplate = (film, array) => {
           </table>
 
           <p class="film-details__film-description">
-             ${description.join('')}
+             ${description}
           </p>
         </div>
       </div>

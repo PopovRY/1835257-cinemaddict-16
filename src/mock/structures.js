@@ -154,3 +154,5 @@ export const generateFilm = () => (
     }
   }
 );
+
+export {COMMENTS_ARRAY};
