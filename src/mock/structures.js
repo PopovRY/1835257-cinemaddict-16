@@ -84,11 +84,11 @@ const getAnyRandomNumber = (min, max, afterPoint) => {
   const lower = Math.min(Math.abs(min), Math.abs(max));
   const upper = Math.max(Math.abs(min), Math.abs(max));
   const result = (Math.random() * (upper - lower) + lower).toFixed(afterPoint);
-  return result;
+  return Number(result);
 };
 
-const getRandomLength = (array) => {
-  const copyArray = array.slice();
+const getArrayRandomLength = (arr) => {
+  const copyArray = arr.slice();
   copyArray.length = getRandomInteger(1, 5);
   return copyArray;
 };
@@ -120,16 +120,19 @@ const generateDate = () => {
   return dayjs().add(yearsGap, 'year').toDate();
 };
 
+const getTitle = (titles) => titles[getRandomInteger(0, titles.length - 1)];
+const getFilmPoster = (posters) => posters[getRandomInteger(0, posters.length - 1)];
+
 
 export const generateFilm = () => (
   {
     'id': generateFilmId().toString(),
     'comments': getCommentId(),
     'film_info': {
-      'title': FILM_TITLES[getRandomInteger(0, FILM_TITLES.length-1)],
-      'alternative_title': FILM_TITLES[getRandomInteger(0, FILM_TITLES.length-1)],
-      'total_rating': +getAnyRandomNumber(0,10,1),
-      'poster': FILM_POSTERS[getRandomInteger(0, FILM_POSTERS.length-1)],
+      'title': getTitle(FILM_TITLES),
+      'alternative_title': getTitle(FILM_TITLES),
+      'total_rating': getAnyRandomNumber(0,10,1),
+      'poster': getFilmPoster(FILM_POSTERS),
       'age_rating': 18,
       'director': 'Tom Ford',
       'writers': [
@@ -143,8 +146,8 @@ export const generateFilm = () => (
         'release_country': 'Finland'
       },
       'runtime': getRandomInteger(0, 200),
-      'genre': getRandomLength(GENRES),
-      'description': getRandomLength(DESCRIPTION).join(''),
+      'genres': getArrayRandomLength(GENRES),
+      'description': getArrayRandomLength(DESCRIPTION).join(''),
     },
     'user_details': {
       'watchlist': generateBoolean(),

@@ -1,9 +1,9 @@
 //Карточка фильма (в списке)
 
-import {addClassBySubmit, getCorrectWord, getDate} from '../utils.js';
+import {getCorrectWord, getDate} from '../utils.js';
 
 export const createFilmCardTemplate = (film) => {
-  const {title, runtime, genre, description, poster} = film['film_info'];
+  const {title, runtime, genres, description, poster} = film['film_info'];
   const rating = film['film_info']['total_rating'];
   const date = film['film_info']['release']['date'];
   const {watchlist} = film['user_details'];
@@ -29,16 +29,16 @@ export const createFilmCardTemplate = (film) => {
             <p class="film-card__info">
               <span class="film-card__year">${year}</span>
               <span class="film-card__duration">${getTime()}</span>
-              <span class="film-card__genre">${genre.join(', ')}</span>
+              <span class="film-card__genre">${genres.join(', ')}</span>
             </p>
             <img src="${poster}" alt="" class="film-card__poster">
             <p class="film-card__description">${getDescription()}</p>
             <span class="film-card__comments">${film.comments.length} ${getCorrectWord(film.comments, 'comment')}</span>
           </a>
           <div class="film-card__controls">
-            <button class="film-card__controls-item film-card__controls-item--add-to-watchlist ${addClassBySubmit(watchlist, 'film-card__controls-item--active')}" type="button">Add to watchlist</button>
-            <button class="film-card__controls-item film-card__controls-item--mark-as-watched ${addClassBySubmit(watchFilm, 'film-card__controls-item--active')}" type="button">Mark as watched</button>
-            <button class="film-card__controls-item film-card__controls-item--favorite ${addClassBySubmit(favorite, 'film-card__controls-item--active')}" type="button">Mark as favorite</button>
+            <button class="film-card__controls-item film-card__controls-item--add-to-watchlist ${watchlist ? 'film-card__controls-item--active' : ''}" type="button">Add to watchlist</button>
+            <button class="film-card__controls-item film-card__controls-item--mark-as-watched ${watchFilm ? 'film-card__controls-item--active' : ''}" type="button">Mark as watched</button>
+            <button class="film-card__controls-item film-card__controls-item--favorite ${favorite ? 'film-card__controls-item--active' : ''}" type="button">Mark as favorite</button>
           </div>
         </article>`;
 };

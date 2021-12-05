@@ -1,6 +1,6 @@
 //Подробная информация о фильме (попап)
 
-import {getDate, addClassBySubmit, getCorrectWord} from '../utils.js';
+import {getDate, getCorrectWord} from '../utils.js';
 
 const renderFilmDetails = (name, value) => (
   `<tr class="film-details__row">
@@ -9,19 +9,19 @@ const renderFilmDetails = (name, value) => (
 </tr>`
 );
 
-const renderGenreItem = (array) => {
-  if (array.length > 0) {
+const renderGenreItem = (ar) => {
+  if (ar.length > 0) {
     const box = [];
-    for (const item of array)
+    for (const item of ar)
     {box.push(`<span class="film-details__genre">${item}</span>`);}
     return box;
   }
 };
 
-const createCommentTemplate = (commentId, array) => {
+const createCommentTemplate = (commentId, comments) => {
   const commentBox = [];
 
-  for (const element of array) {
+  for (const element of comments) {
     if (commentId.includes(element.id)) {
 
       const {author, comment, date, emotion} = element;
@@ -45,8 +45,8 @@ const createCommentTemplate = (commentId, array) => {
   return commentBox;
 };
 
-export const createPopupTemplate = (film, array) => {
-  const {title, runtime, genre, description, poster, director, writers, actors} = film['film_info'];
+export const createPopupTemplate = (film, comments) => {
+  const {title, runtime, genres, description, poster, director, writers, actors} = film['film_info'];
   const rating = film['film_info']['total_rating'];
   const date = film['film_info']['release']['date'];
   const {watchlist} = film['user_details'];
@@ -96,7 +96,7 @@ export const createPopupTemplate = (film, array) => {
             ${renderFilmDetails('Release Date', dateFormat)}
             ${renderFilmDetails('Runtime', getTime())}
             ${renderFilmDetails('Country', country)}
-            ${renderFilmDetails(getCorrectWord(genre, 'Genre'), renderGenreItem(genre).join(' '))}
+            ${renderFilmDetails(getCorrectWord(genres, 'Genre'), renderGenreItem(genres).join(' '))}
           </table>
 
           <p class="film-details__film-description">
@@ -106,9 +106,9 @@ export const createPopupTemplate = (film, array) => {
       </div>
 
       <section class="film-details__controls">
-        <button type="button" class="film-details__control-button ${addClassBySubmit(watchlist, 'film-details__control-button--active')} film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
-        <button type="button" class="film-details__control-button ${addClassBySubmit(watchFilm, 'film-details__control-button--active')} film-details__control-button--active film-details__control-button--watched" id="watched" name="watched">Already watched</button>
-        <button type="button" class="film-details__control-button ${addClassBySubmit(favorite, 'film-details__control-button--active')} film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
+        <button type="button" class="film-details__control-button ${watchFilm ? 'film-details__control-button--active' : ''} film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
+        <button type="button" class="film-details__control-button ${watchlist ? 'film-details__control-button--active' : ''} film-details__control-button--active film-details__control-button--watched" id="watched" name="watched">Already watched</button>
+        <button type="button" class="film-details__control-button ${favorite ? 'film-details__control-button--active' : ''} film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
       </section>
     </div>
 
@@ -117,7 +117,7 @@ export const createPopupTemplate = (film, array) => {
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${film.comments.length}</span></h3>
 
         <ul class="film-details__comments-list">
-          ${createCommentTemplate(film.comments, array).join('')}
+          ${createCommentTemplate(film.comments, comments).join(' ')}
         </ul>
 
         <div class="film-details__new-comment">

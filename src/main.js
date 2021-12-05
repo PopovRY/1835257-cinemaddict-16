@@ -2,7 +2,7 @@ import {createUserRankTemplate} from './view/user-rank-view.js';
 import {createMenuTemplate} from './view/menu-view.js';
 import {createFilmCardTemplate, createFilmListTemplate} from './view/film-card-view.js';
 import {createShowMoreButtonTemplate} from './view/more-button-view.js';
-import {createFilmsExtraTemplate} from './view/films-section-view.js';
+import {createFilmsExtraTemplate} from './view/films-extra-view.js';
 import {createPopupTemplate} from './view/film-popup-view.js';
 import {COMMENTS_ARRAY, generateFilm} from './mock/structures.js';
 import {createFilter} from './filter.js';
@@ -63,19 +63,20 @@ if (films.length > FILM_CARD_COUNT) {
   });
 }
 //счетчик фильмов
-renderTemplate(siteFooterElement, createFooterFilmsCount(films), RenderPosition.BEFOREEND);
+renderTemplate(siteFooterElement, createFooterFilmsCount(films.length), RenderPosition.BEFOREEND);
 
 //Вставил попап
 renderTemplate(siteBodyElement, createPopupTemplate(films[0], COMMENTS_ARRAY), RenderPosition.BEFOREEND);
 
 //Карточки в категории
-renderTemplate(siteMainElement, createFilmsExtraTemplate(), RenderPosition.BEFOREEND);
+
 const sectionFilms = siteMainElement.querySelector('.films');
-const sectionTopRated = sectionFilms.querySelector('#top_rated');
-const sectionMostCommented = sectionFilms.querySelector('#most_comm');
+renderTemplate(sectionFilms, createFilmsExtraTemplate(), RenderPosition.BEFOREEND);
 
+const sectionExtraTopRated = sectionFilms.querySelector('#top_rated_container');
+const sectionExtraMostCommented = sectionFilms.querySelector('#most_comm_container');
 
-renderTemplate(sectionTopRated, createFilmCardTemplate(), RenderPosition.BEFOREEND);
-renderTemplate(sectionTopRated, createFilmCardTemplate(), RenderPosition.BEFOREEND);
-renderTemplate(sectionMostCommented, createFilmCardTemplate(), RenderPosition.BEFOREEND);
-renderTemplate(sectionMostCommented, createFilmCardTemplate(), RenderPosition.BEFOREEND);
+for (const film of films.slice(0, 2)) {
+  renderTemplate(sectionExtraTopRated, createFilmCardTemplate(film), RenderPosition.BEFOREEND);
+  renderTemplate(sectionExtraMostCommented, createFilmCardTemplate(film), RenderPosition.BEFOREEND);
+}
