@@ -46,15 +46,15 @@ const createCommentTemplate = (commentId, comments) => {
 };
 
 export const createPopupTemplate = (film, comments) => {
-  const {title, runtime, genres, description, poster, director, writers, actors} = film['film_info'];
-  const rating = film['film_info']['total_rating'];
-  const date = film['film_info']['release']['date'];
-  const {watchlist} = film['user_details'];
-  const watchFilm = film['user_details']['already_watched'];
-  const favorite = film['user_details']['favorite'];
-  const ageRating = film['film_info']['age_rating'];
-  const alternativeTitle = film['film_info']['alternative_title'];
-  const country = film['film_info']['release']['release_country'];
+  const {title, runtime, genres, description, poster, director, writers, actors} = film['filmInfo'];
+  const rating = film['filmInfo']['totalRating'];
+  const date = film['filmInfo']['release']['date'];
+  const {watchlist} = film['userDetails'];
+  const watchFilm = film['userDetails']['alreadyWatched'];
+  const favorite = film['userDetails']['favorite'];
+  const ageRating = film['filmInfo']['ageRating'];
+  const alternativeTitle = film['filmInfo']['alternativeTitle'];
+  const country = film['filmInfo']['release']['releaseCountry'];
 
   const dateFormat = getDate(date, 'D MMMM YYYY');
 

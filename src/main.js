@@ -1,6 +1,6 @@
 import {createUserRankTemplate} from './view/user-rank-view.js';
 import {createMenuTemplate} from './view/menu-view.js';
-import {createFilmCardTemplate, createFilmListTemplate} from './view/film-card-view.js';
+import {createFilmCardTemplate} from './view/film-card-view.js';
 import {createShowMoreButtonTemplate} from './view/more-button-view.js';
 import {createFilmsExtraTemplate} from './view/films-extra-view.js';
 import {createPopupTemplate} from './view/film-popup-view.js';
@@ -9,6 +9,7 @@ import {createFilter} from './filter.js';
 import {RenderPosition, renderTemplate} from './render.js';
 import {createSort} from './view/sort-view.js';
 import {createFooterFilmsCount} from './view/films-count-view.js';
+import {createFilmListTemplate} from './view/film-list-view.js';
 
 const FILM_CARD_COUNT = 5;
 const FILM_COUNT = 20;

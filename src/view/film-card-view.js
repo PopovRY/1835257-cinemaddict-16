@@ -3,12 +3,12 @@
 import {getCorrectWord, getDate} from '../utils.js';
 
 export const createFilmCardTemplate = (film) => {
-  const {title, runtime, genres, description, poster} = film['film_info'];
-  const rating = film['film_info']['total_rating'];
-  const date = film['film_info']['release']['date'];
-  const {watchlist} = film['user_details'];
-  const watchFilm = film['user_details']['already_watched'];
-  const favorite = film['user_details']['favorite'];
+  const {title, runtime, genres, description, poster} = film['filmInfo'];
+  const rating = film['filmInfo']['totalRating'];
+  const date = film['filmInfo']['release']['date'];
+  const {watchlist} = film['userDetails'];
+  const watchFilm = film['userDetails']['alreadyWatched'];
+  const favorite = film['userDetails']['favorite'];
 
   const year = getDate(date, 'YYYY');
 
@@ -42,12 +42,3 @@ export const createFilmCardTemplate = (film) => {
           </div>
         </article>`;
 };
-
-export const createFilmListTemplate = () => (
-  `<section class="films">
-    <section class="films-list">
-      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-      <div class="films-list__container"></div>
-    </section>
-  </section>`
-);

@@ -128,12 +128,12 @@ export const generateFilm = () => (
   {
     'id': generateFilmId().toString(),
     'comments': getCommentId(),
-    'film_info': {
+    'filmInfo': {
       'title': getTitle(FILM_TITLES),
-      'alternative_title': getTitle(FILM_TITLES),
-      'total_rating': getAnyRandomNumber(0,10,1),
+      'alternativeTitle': getTitle(FILM_TITLES),
+      'totalRating': getAnyRandomNumber(0,10,1),
       'poster': getFilmPoster(FILM_POSTERS),
-      'age_rating': 18,
+      'ageRating': 18,
       'director': 'Tom Ford',
       'writers': [
         'Takeshi Kitano'
@@ -143,16 +143,16 @@ export const generateFilm = () => (
       ],
       'release': {
         'date': generateDate(),
-        'release_country': 'Finland'
+        'releaseCountry': 'Finland'
       },
       'runtime': getRandomInteger(0, 200),
       'genres': getArrayRandomLength(GENRES),
       'description': getArrayRandomLength(DESCRIPTION).join(''),
     },
-    'user_details': {
+    'userDetails': {
       'watchlist': generateBoolean(),
-      'already_watched': generateBoolean(),
-      'watching_date': dayjs().toDate(),
+      'alreadyWatched': generateBoolean(),
+      'watchingDate': dayjs().toDate(),
       'favorite': generateBoolean(),
     }
   }
