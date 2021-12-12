@@ -7,7 +7,7 @@ const createMenuItemTemplate = (filter) => {
   const {name, count} = filter;
 
   return (
-    `<a href="#${name}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>`
+    `<a href="#${name}" class="main-navigation__item">${name.charAt(0).toUpperCase() + name.slice(1)} <span class="main-navigation__item-count">${count}</span></a>`
   );
 };
 const createMenuTemplate = (filterItems) => {

@@ -1,8 +1,9 @@
 //Карточка фильма (в списке)
 
 import {getCorrectWord, getDate} from '../utils.js';
+import {createElement} from '../render';
 
-export const createFilmCardTemplate = (film) => {
+const createFilmCardTemplate = (film) => {
   const {title, runtime, genres, description, poster} = film['filmInfo'];
   const rating = film['filmInfo']['totalRating'];
   const date = film['filmInfo']['release']['date'];
@@ -42,3 +43,29 @@ export const createFilmCardTemplate = (film) => {
           </div>
         </article>`;
 };
+
+export default class FilmCard {
+  #element = null;
+  #film = null;
+
+  constructor(film) {
+    this.#film = film;
+  }
+
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template(){
+    return createFilmCardTemplate(this.#film);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

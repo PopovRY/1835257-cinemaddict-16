@@ -1,9 +1,9 @@
 const filterMap = {
-  Watchlist: (films) => films
+  watchlist: (films) => films
     .filter((film) => film.userDetails.watchlist).length,
-  History: (films) => films
+  history: (films) => films
     .filter((film) => film.userDetails.alreadyWatched).length,
-  Favorites: (films) => films
+  favorites: (films) => films
     .filter((film) => film.userDetails.favorite).length,
 };
 

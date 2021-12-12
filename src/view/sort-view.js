@@ -1,3 +1,5 @@
+import {createElement} from '../render';
+
 export const createSort = () => (
   `<ul class="sort">
   <li><a href="#" class="sort__button">Sort by default</a></li>
@@ -5,3 +7,23 @@ export const createSort = () => (
   <li><a href="#" class="sort__button sort__button--active">Sort by rating</a></li>
 </ul>`
 );
+
+export default class Sort {
+  #element = null;
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template(){
+    return createSort();
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

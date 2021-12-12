@@ -1,5 +1,5 @@
 //Профиль пользователя
-import {createElement} from "../render";
+import {createElement} from '../render';
 
 export const createUserProfileTemplate = () => (
   `<section class="header__profile profile">

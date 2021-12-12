@@ -1,12 +1,33 @@
-export const createFilmsExtraTemplate = () => (
+import {createElement} from '../render';
+
+const createFilmsExtraTemplate = (heading) => (
   `<section class="films-list films-list--extra">
-  <h2 class="films-list__title">Top rated</h2>
-  <div class="films-list__container" id="top_rated_container">
-  </div>
-</section>
-<section class="films-list films-list--extra">
-  <h2 class="films-list__title">Most commented</h2>
-  <div class="films-list__container" id="most_comm_container">
-  </div>
+  <h2 class="films-list__title">${heading}</h2>
 </section>`
 );
+
+export default class FilmsListExtra {
+  #element = null;
+  #heading = null;
+
+  constructor(heading) {
+    this.#heading = heading;
+  }
+
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template(){
+    return createFilmsExtraTemplate(this.#heading);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
