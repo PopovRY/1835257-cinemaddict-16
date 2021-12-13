@@ -58,13 +58,23 @@ const renderFilm = (filmListElement, film) => {
     filmListElement.replaceChild(filmCardComponent.element, popupComponent.element);
   };
 
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      replacePopupToCard();
+      document.removeEventListener('keydown', onEscKeyDown);
+    }
+  };
+
   filmCardComponent.element.querySelector('.film-card__link').addEventListener('click',() => {
     replaceCardToPopup();
+    document.addEventListener('keydown', onEscKeyDown);
   });
 
   popupComponent.element.querySelector('.film-details__close-btn').addEventListener('submit', (evt) => {
     evt.preventDefault();
     replacePopupToCard();
+    document.addEventListener('keydown', onEscKeyDown);
   });
 
   render(filmListElement, filmCardComponent.element,RenderPosition.BEFOREEND);
