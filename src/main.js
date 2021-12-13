@@ -50,6 +50,23 @@ const renderFilm = (filmListElement, film) => {
   const filmCardComponent = new FilmCard(film);
   const popupComponent = new Popup(film, COMMENTS_ARRAY);
 
+  const replaceCardToPopup = () => {
+    filmListElement.replaceChild(popupComponent.element, filmCardComponent.element);
+  };
+
+  const replacePopupToCard = () => {
+    filmListElement.replaceChild(filmCardComponent.element, popupComponent.element);
+  };
+
+  filmCardComponent.element.querySelector('.film-card__link').addEventListener('click',() => {
+    replaceCardToPopup();
+  });
+
+  popupComponent.element.querySelector('.film-details__close-btn').addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    replacePopupToCard();
+  });
+
   render(filmListElement, filmCardComponent.element,RenderPosition.BEFOREEND);
 };
 for (let i=0; i<  Math.min(films.length, FILM_CARD_COUNT); i++) {
