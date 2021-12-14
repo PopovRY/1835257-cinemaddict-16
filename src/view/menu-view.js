@@ -40,6 +40,7 @@ export default class MenuView {
   get template() {
     return createMenuTemplate(this.#filters);
   }
+
   removeElement() {
     this.#element = null;
   }

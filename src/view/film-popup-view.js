@@ -1,7 +1,7 @@
 //Подробная информация о фильме (попап)
 
 import {getDate, getCorrectWord} from '../utils.js';
-import {createElement} from "../render";
+import {createElement} from '../render';
 
 const renderFilmDetails = (name, value) => (
   `<tr class="film-details__row">
@@ -161,9 +161,9 @@ export default class Popup {
   #film = null;
   #comments = null;
 
-  constructor(film, array) {
+  constructor(film, comments) {
     this.#film = film;
-    this.#comments = array;
+    this.#comments = comments;
   }
 
   get element() {
