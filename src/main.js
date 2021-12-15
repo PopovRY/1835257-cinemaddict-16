@@ -49,9 +49,9 @@ render(siteFooterElement, new FooterFilmsCount(films.length).element, RenderPosi
 
 //Вставил карточки
 
-const renderFilm = (filmsListElement, film) => {
-  const filmCardComponent = new FilmCard(film);
-  const popupComponent = new Popup(film, COMMENTS_ARRAY);
+const renderFilm = (filmsListElement, filmsArray) => {
+  const filmCardComponent = new FilmCard(filmsArray);
+  const popupComponent = new Popup(filmsArray, COMMENTS_ARRAY);
 
   const replaceCardToPopup = () => {
     render(siteBodyElement, popupComponent.element, RenderPosition.BEFOREEND);
@@ -76,11 +76,10 @@ const renderFilm = (filmsListElement, film) => {
     siteBodyElement.classList.remove('hide-overflow');
     document.addEventListener('keydown', onEscKeyDown);
   });
-console.log(filmsListElement);
   render(filmsListElement.element, filmCardComponent.element, RenderPosition.BEFOREEND);
 };
 
-const renderFilmList = (container, array) => {
+const renderFilmList = (container, filmsArray) => {
   const filmComponent = new Film();
   render(container, filmComponent.element, RenderPosition.BEFOREEND);
 
@@ -89,10 +88,10 @@ const renderFilmList = (container, array) => {
   const filmContainerComponent = new FilmListContainer();
   render(filmListComponent.element, filmContainerComponent.element, RenderPosition.BEFOREEND);
 
-  for (let i = 0; i < Math.min(array.length, FILM_CARD_COUNT); i++) {
-    renderFilm(filmContainerComponent, array[i]);
+  for (let i = 0; i < Math.min(filmsArray.length, FILM_CARD_COUNT); i++) {
+    renderFilm(filmContainerComponent, filmsArray[i]);
   }
-  if (array.length > FILM_CARD_COUNT) {
+  if (filmsArray.length > FILM_CARD_COUNT) {
 
     let renderedFilmCount = FILM_CARD_COUNT;
     const showMoreButtonComponent = new ShowMoreButton();
@@ -100,16 +99,32 @@ const renderFilmList = (container, array) => {
 
     showMoreButtonComponent.element.addEventListener('click', (evt) => {
       evt.preventDefault();
-      array
+      filmsArray
         .slice(renderedFilmCount, renderedFilmCount + FILM_CARD_COUNT)
         .forEach((film) => renderFilm(filmContainerComponent.element, film));
 
       renderedFilmCount += FILM_CARD_COUNT;
 
-      if (renderedFilmCount >= array.length) {
-        showMoreButtonComponent.remove();
+      if (renderedFilmCount >= filmsArray.length) {
+        showMoreButtonComponent.element.remove();
+        showMoreButtonComponent.removeElement();
       }
     });
+  }
+
+  const filmsListExtraTopComponent = new FilmsListExtra('Top rated');
+  render(filmComponent.element, filmsListExtraTopComponent.element, RenderPosition.BEFOREEND);
+  const filmTopRateComponent = new FilmTop();
+  render(filmsListExtraTopComponent.element, filmTopRateComponent.element, RenderPosition.BEFOREEND);
+
+  const filmsListExtraCommentedComponent = new FilmsListExtra('Most commented');
+  render(filmComponent.element, filmsListExtraCommentedComponent.element, RenderPosition.BEFOREEND);
+  const filmMostCommentedComponent = new FilmTop();
+  render(filmsListExtraCommentedComponent.element, filmMostCommentedComponent.element, RenderPosition.BEFOREEND);
+
+  for (const film of films.slice(0, 2)) {
+    renderFilm(filmTopRateComponent, film);
+    renderFilm(filmMostCommentedComponent, film);
   }
 };
 
