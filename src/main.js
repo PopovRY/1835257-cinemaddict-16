@@ -41,9 +41,6 @@ render(menuComponent.element, new Stats().element, RenderPosition.BEFOREEND);
 //Вставил сортировку
 render(siteMainElement, new Sort().element, RenderPosition.BEFOREEND);
 
-//Место для карточек
-render(siteMainElement, new FilmList().element, RenderPosition.BEFOREEND);
-
 //Количество фильмов
 render(siteFooterElement, new FooterFilmsCount(films.length).element, RenderPosition.BEFOREEND);
 
@@ -76,7 +73,8 @@ const renderFilm = (filmsListElement, filmsArray) => {
     siteBodyElement.classList.remove('hide-overflow');
     document.addEventListener('keydown', onEscKeyDown);
   });
-  render(filmsListElement.element, filmCardComponent.element, RenderPosition.BEFOREEND);
+
+  render(filmsListElement, filmCardComponent.element, RenderPosition.BEFOREEND);
 };
 
 const renderFilmList = (container, filmsArray) => {
@@ -89,10 +87,9 @@ const renderFilmList = (container, filmsArray) => {
   render(filmListComponent.element, filmContainerComponent.element, RenderPosition.BEFOREEND);
 
   for (let i = 0; i < Math.min(filmsArray.length, FILM_CARD_COUNT); i++) {
-    renderFilm(filmContainerComponent, filmsArray[i]);
+    renderFilm(filmContainerComponent.element, filmsArray[i]);
   }
   if (filmsArray.length > FILM_CARD_COUNT) {
-
     let renderedFilmCount = FILM_CARD_COUNT;
     const showMoreButtonComponent = new ShowMoreButton();
     render(filmListComponent.element, showMoreButtonComponent.element, RenderPosition.BEFOREEND);
@@ -123,8 +120,8 @@ const renderFilmList = (container, filmsArray) => {
   render(filmsListExtraCommentedComponent.element, filmMostCommentedComponent.element, RenderPosition.BEFOREEND);
 
   for (const film of films.slice(0, 2)) {
-    renderFilm(filmTopRateComponent, film);
-    renderFilm(filmMostCommentedComponent, film);
+    renderFilm(filmTopRateComponent.element, film);
+    renderFilm(filmMostCommentedComponent.element, film);
   }
 };
 
