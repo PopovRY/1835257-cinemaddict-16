@@ -44,7 +44,7 @@ const createFilmCardTemplate = (film) => {
         </article>`;
 };
 
-export default class FilmCard {
+export default class FilmCardView {
   #element = null;
   #film = null;
 

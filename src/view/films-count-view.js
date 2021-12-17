@@ -6,7 +6,7 @@ const createFooterFilmsCount = (filmsCount) => (
 </section>`
 );
 
-export default class FooterFilmsCount {
+export default class FilmsCountView {
   #element = null;
   #films = null;
 

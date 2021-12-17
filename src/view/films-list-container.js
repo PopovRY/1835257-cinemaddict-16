@@ -4,7 +4,7 @@ const createFilmListContainerTemplate = () => (
   '<div class="films-list__container"></div>'
 );
 
-export default class FilmListContainer {
+export default class FilmsListContainer {
   #element = null;
 
   get element() {

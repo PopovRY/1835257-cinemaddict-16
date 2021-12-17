@@ -6,7 +6,7 @@ const createShowMoreButtonTemplate = () => (
   '<button class="films-list__show-more">Show more</button>'
 );
 
-export default class ShowMoreButton {
+export default class ShowMoreButtonView {
   #element = null;
 
   get element() {

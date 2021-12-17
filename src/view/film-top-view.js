@@ -4,7 +4,7 @@ export const createFilmTop = () => (
   '<div class="films-list__container"></div>'
 );
 
-export default class FilmTop {
+export default class FilmTopView {
   #element = null;
 
   get element() {

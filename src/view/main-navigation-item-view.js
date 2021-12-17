@@ -21,7 +21,7 @@ const createMenuTemplate = (filterItems) => {
     </div>`;
 };
 
-export default class MenuView {
+export default class MainNavigationItemView {
   #element = null;
   #filters = null;
 

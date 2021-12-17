@@ -4,7 +4,7 @@ const createMainNavigation = () => (
   '<nav class="main-navigation"></nav>'
 );
 
-export default class Navigation {
+export default class MainNavigationMenuView {
   #element = null;
 
   get element() {

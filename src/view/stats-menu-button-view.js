@@ -4,7 +4,7 @@ const createStats = () => (
   '<a href="#stats" class="main-navigation__additional">Stats</a>'
 );
 
-export default class Stats {
+export default class StatsMenuButtonView {
   #element = null;
 
   get element() {

@@ -8,7 +8,7 @@ const createSort = () => (
 </ul>`
 );
 
-export default class Sort {
+export default class SortView {
   #element = null;
 
   get element() {

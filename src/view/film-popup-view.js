@@ -156,7 +156,7 @@ const createPopupTemplate = (film, comments) => {
 </section>`;
 };
 
-export default class Popup {
+export default class FilmPopupView {
   #element = null;
   #film = null;
   #comments = null;

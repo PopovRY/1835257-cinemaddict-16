@@ -6,7 +6,7 @@ const createFilmsExtraTemplate = (heading) => (
 </section>`
 );
 
-export default class FilmsListExtra {
+export default class FilmsListExtraView {
   #element = null;
   #heading = null;
 

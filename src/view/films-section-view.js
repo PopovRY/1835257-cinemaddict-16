@@ -4,7 +4,7 @@ const createFilmsTemplate = () => (
   '<section class="films"></section>'
 );
 
-export default class Film {
+export default class FilmsSectionView {
   #element = null;
 
   get element() {
