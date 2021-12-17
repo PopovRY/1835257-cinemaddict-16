@@ -1,6 +1,7 @@
 //Подробная информация о фильме (попап)
 
 import {getDate, getCorrectWord} from '../utils.js';
+import {createElement} from '../render';
 
 const renderFilmDetails = (name, value) => (
   `<tr class="film-details__row">
@@ -45,7 +46,7 @@ const createCommentTemplate = (commentId, comments) => {
   return commentBox;
 };
 
-export const createPopupTemplate = (film, comments) => {
+const createPopupTemplate = (film, comments) => {
   const {title, runtime, genres, description, poster, director, writers, actors} = film['filmInfo'];
   const rating = film['filmInfo']['totalRating'];
   const date = film['filmInfo']['release']['date'];
@@ -154,3 +155,30 @@ export const createPopupTemplate = (film, comments) => {
   </form>
 </section>`;
 };
+
+export default class FilmPopupView {
+  #element = null;
+  #film = null;
+  #comments = null;
+
+  constructor(film, comments) {
+    this.#film = film;
+    this.#comments = comments;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template(){
+    return createPopupTemplate(this.#film, this.#comments);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
