@@ -1,8 +1,8 @@
 import {createElement} from '../render';
 
-const createFilmListTemplate = () => (
+const createFilmListTemplate = (films) => (
   `<section class="films-list">
-      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+      <h2 class="films-list__title ${films.length !== 0 && 'visually-hidden'}">${films.length !== 0 ? 'All movies. Upcoming' : '«There are no movies in our database»'}</h2>
   </section>`
 );
 
