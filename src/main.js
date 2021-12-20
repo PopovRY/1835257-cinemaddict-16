@@ -62,13 +62,13 @@ const renderFilm = (filmsListElement, arr) => {
     }
   };
 
-  filmCardComponent.element.querySelector('.film-card__link').addEventListener('click',() => {
+  filmCardComponent.setFilmCardClickHandler(() => {
     openPopup();
     siteBodyElement.classList.add('hide-overflow');
     document.addEventListener('keydown', onEscKeyDown);
   });
 
-  popupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+  popupComponent.setPopupClickHandler(() => {
     siteBodyElement.removeChild(popupComponent.element);
     siteBodyElement.classList.remove('hide-overflow');
     document.removeEventListener('keydown', onEscKeyDown);
@@ -77,32 +77,31 @@ const renderFilm = (filmsListElement, arr) => {
   render(filmsListElement, filmCardComponent.element, RenderPosition.BEFOREEND);
 };
 
-const renderFilmList = (container, filmsArray) => {
+const renderFilmList = (container, arr) => {
   const filmComponent = new FilmsSectionView();
   render(container, filmComponent.element, RenderPosition.BEFOREEND);
 
-  const filmListComponent = new FilmListView(filmsArray);
+  const filmListComponent = new FilmListView(arr);
   render(filmComponent.element, filmListComponent.element, RenderPosition.BEFOREEND);
   const filmContainerComponent = new FilmsListContainer();
   render(filmListComponent.element, filmContainerComponent.element, RenderPosition.BEFOREEND);
 
-  for (let i = 0; i < Math.min(filmsArray.length, FILM_CARD_COUNT); i++) {
-    renderFilm(filmContainerComponent.element, filmsArray[i]);
+  for (let i = 0; i < Math.min(arr.length, FILM_CARD_COUNT); i++) {
+    renderFilm(filmContainerComponent.element, arr[i]);
   }
-  if (filmsArray.length > FILM_CARD_COUNT) {
+  if (arr.length > FILM_CARD_COUNT) {
     let renderedFilmCount = FILM_CARD_COUNT;
     const showMoreButtonComponent = new ShowMoreButtonView();
     render(filmListComponent.element, showMoreButtonComponent.element, RenderPosition.BEFOREEND);
 
-    showMoreButtonComponent.element.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      filmsArray
+    showMoreButtonComponent.setClickHandlerMoreBtn(() => {
+      arr
         .slice(renderedFilmCount, renderedFilmCount + FILM_CARD_COUNT)
         .forEach((film) => renderFilm(filmContainerComponent.element, film));
 
       renderedFilmCount += FILM_CARD_COUNT;
 
-      if (renderedFilmCount >= filmsArray.length) {
+      if (renderedFilmCount >= arr.length) {
         showMoreButtonComponent.element.remove();
         showMoreButtonComponent.removeElement();
       }
