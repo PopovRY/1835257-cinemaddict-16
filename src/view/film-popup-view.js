@@ -1,7 +1,7 @@
 //Подробная информация о фильме (попап)
 
 import {getDate, getCorrectWord} from '../utils.js';
-import {createElement} from '../render';
+import AbstractView from './abstract-view';
 
 const renderFilmDetails = (name, value) => (
   `<tr class="film-details__row">
@@ -156,29 +156,17 @@ const createPopupTemplate = (film, comments) => {
 </section>`;
 };
 
-export default class FilmPopupView {
-  #element = null;
+export default class FilmPopupView extends AbstractView{
   #film = null;
   #comments = null;
 
   constructor(film, comments) {
+    super();
     this.#film = film;
     this.#comments = comments;
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
   get template(){
     return createPopupTemplate(this.#film, this.#comments);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }
