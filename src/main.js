@@ -46,9 +46,9 @@ render(siteFooterElement, new FilmsCountView(films.length).element, RenderPositi
 
 //Вставил карточки
 
-const renderFilm = (filmsListElement, filmsArray) => {
-  const filmCardComponent = new FilmCardView(filmsArray);
-  const popupComponent = new FilmPopupView(filmsArray, COMMENTS_ARRAY);
+const renderFilm = (filmsListElement, arr) => {
+  const filmCardComponent = new FilmCardView(arr);
+  const popupComponent = new FilmPopupView(arr, COMMENTS_ARRAY);
 
   const openPopup = () => {
     render(siteBodyElement, popupComponent.element, RenderPosition.BEFOREEND);
