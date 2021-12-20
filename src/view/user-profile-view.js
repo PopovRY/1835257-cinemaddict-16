@@ -1,5 +1,5 @@
 //Профиль пользователя
-import {createElement} from '../render';
+import AbstractView from './abstract-view';
 
 export const createUserProfileTemplate = () => (
   `<section class="header__profile profile">
@@ -8,22 +8,8 @@ export const createUserProfileTemplate = () => (
   </section>`
 );
 
-export default class UserProfileView {
-  #element = null;
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
+export default class UserProfileView extends AbstractView{
   get template(){
     return createUserProfileTemplate();
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }

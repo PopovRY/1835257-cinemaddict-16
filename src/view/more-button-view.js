@@ -1,27 +1,23 @@
 //Кнопка «Show more»
 
-import {createElement} from '../render';
+import AbstractView from './abstract-view';
 
 const createShowMoreButtonTemplate = () => (
   '<button class="films-list__show-more">Show more</button>'
 );
 
-export default class ShowMoreButtonView {
-  #element = null;
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
+export default class ShowMoreButtonView extends AbstractView{
   get template(){
     return createShowMoreButtonTemplate();
   }
 
-  removeElement() {
-    this.#element = null;
+  setClickHandlerMoreBtn = (callback) => {
+    this._callback.moreBtnClick = callback;
+    this.element.addEventListener('click', this.#clickHandlerMoreBtn);
+  }
+
+  #clickHandlerMoreBtn = (evt) => {
+    evt.preventDefault();
+    this._callback.moreBtnClick();
   }
 }

@@ -1,4 +1,4 @@
-import {createElement} from '../render';
+import AbstractView from './abstract-view';
 
 const createFooterFilmsCount = (filmsCount) => (
   `<section class="footer__statistics">
@@ -6,28 +6,15 @@ const createFooterFilmsCount = (filmsCount) => (
 </section>`
 );
 
-export default class FilmsCountView {
-  #element = null;
+export default class FilmsCountView extends AbstractView{
   #films = null;
 
   constructor(films) {
+    super();
     this.#films = films;
-  }
-
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template(){
     return createFooterFilmsCount(this.#films);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }
