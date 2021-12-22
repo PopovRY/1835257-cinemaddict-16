@@ -16,7 +16,7 @@ import FilmsSectionView from './view/films-section-view';
 import FilmsListContainer from './view/films-list-container';
 import FilmTopView from './view/film-top-view';
 
-const FILM_CARD_COUNT = 5;
+export const FILM_CARD_COUNT = 5;
 const FILM_COUNT = 20;
 
 const films = Array.from({length: FILM_COUNT}, generateFilm);
