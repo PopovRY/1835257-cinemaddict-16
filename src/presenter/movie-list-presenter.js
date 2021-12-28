@@ -21,9 +21,15 @@ export default class MovieListPresenter {
   #filmComponent = new FilmsSectionView();
   #filmListComponent = new FilmListView();
   #filmContainerComponent = new FilmsListContainer();
+  #showMoreButtonComponent = new ShowMoreButtonView();
+  #filmsListExtraTopComponent = new FilmsListExtraView('Top rated');
+  #filmsListExtraCommentedComponent = new FilmsListExtraView('Most commented');
+  #filmTopRateComponent = new FilmTopView();
+  #filmMostCommentedComponent = new FilmTopView();
 
 
   #films = [];
+  #renderedFilmCount = FILM_CARD_COUNT;
 
   constructor(container) {
     this.#container = container;
@@ -37,7 +43,7 @@ export default class MovieListPresenter {
     render(this.#filmComponent, this.#filmListComponent, RenderPosition.BEFOREEND);
     render(this.#filmListComponent, this.#filmContainerComponent, RenderPosition.BEFOREEND);
     this.#renderFilmList(this.#films);
-    this.#renderLoadMoreButton();
+    this.#renderShowMoreButton();
     this.#renderHeadingFilmList();
     this.#renderExtra();
   }
@@ -80,46 +86,51 @@ export default class MovieListPresenter {
   }
 
   #renderFilmList = (films) => {
-
-    for (let i = 0; i < Math.min(films.length, FILM_CARD_COUNT); i++) {
+    for (let i = 0; i < Math.min(films.length, this.#renderedFilmCount); i++) {
       this.#renderFilm(films[i]);
     }
   }
 
-  #renderLoadMoreButton = () => {
+  #renderShowMoreButton = () => {
+    render(this.#filmListComponent, this.#showMoreButtonComponent, RenderPosition.BEFOREEND);
+
+    this.#showMoreButtonComponent.setClickHandlerMoreBtn(this.#handleShowMoreButtonClick);
+  }
+
+  #handleShowMoreButtonClick = () => {
+    this.#renderFilms(this.#renderedFilmCount, this.#renderedFilmCount + FILM_CARD_COUNT);
+    this.#renderedFilmCount += FILM_CARD_COUNT;
+
+    if (this.#renderedFilmCount >= this.#films.length) {
+      this.#showMoreButtonComponent.removeElement();
+    }
+
+  }
+
+  #renderFilms = (from, to) => {
+    this.#films
+      .slice(from, to)
+      .forEach((film) => this.#renderFilm(film, this.#filmContainerComponent));
+  }
+
+  #renderFilmsLogic = () => {
+    this.#renderFilms(0, Math.min(this.#films.length, FILM_CARD_COUNT));
     if (this.#films.length > FILM_CARD_COUNT) {
-      let renderedFilmCount = FILM_CARD_COUNT;
-      const showMoreButtonComponent = new ShowMoreButtonView();
-      render(this.#filmListComponent, showMoreButtonComponent, RenderPosition.BEFOREEND);
-
-      showMoreButtonComponent.setClickHandlerMoreBtn(() => {
-        this.#films
-          .slice(renderedFilmCount, renderedFilmCount + FILM_CARD_COUNT)
-          .forEach((film) => this.#renderFilm(film));
-
-        renderedFilmCount += FILM_CARD_COUNT;
-
-        if (renderedFilmCount >= this.#films.length) {
-          showMoreButtonComponent.removeElement();
-        }
-      });
+      this.#renderShowMoreButton();
     }
   }
 
-  #renderExtra = () => {
-    const filmsListExtraTopComponent = new FilmsListExtraView('Top rated');
-    render(this.#filmComponent, filmsListExtraTopComponent, RenderPosition.BEFOREEND);
-    const filmTopRateComponent = new FilmTopView();
-    render(filmsListExtraTopComponent, filmTopRateComponent, RenderPosition.BEFOREEND);
 
-    const filmsListExtraCommentedComponent = new FilmsListExtraView('Most commented');
-    render(this.#filmComponent, filmsListExtraCommentedComponent, RenderPosition.BEFOREEND);
-    const filmMostCommentedComponent = new FilmTopView();
-    render(filmsListExtraCommentedComponent, filmMostCommentedComponent, RenderPosition.BEFOREEND);
+  #renderExtra = () => {
+    render(this.#filmComponent, this.#filmsListExtraTopComponent, RenderPosition.BEFOREEND);
+    render(this.#filmsListExtraTopComponent, this.#filmTopRateComponent, RenderPosition.BEFOREEND);
+
+    render(this.#filmComponent, this.#filmsListExtraCommentedComponent, RenderPosition.BEFOREEND);
+    render(this.#filmsListExtraCommentedComponent, this.#filmMostCommentedComponent, RenderPosition.BEFOREEND);
 
     for (const film of this.#films.slice(0, 2)) {
-      this.#renderFilm(filmTopRateComponent, film);
-      this.#renderFilm(filmMostCommentedComponent, film);
+      this.#renderFilm(this.#filmTopRateComponent, film); //для отрисовки экстра вынести функцию рендер в отдельный компонент и добавить контейнер в параметр
+      this.#renderFilm(this.#filmMostCommentedComponent, film);
     }
   }
 }
