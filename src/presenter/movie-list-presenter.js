@@ -11,6 +11,7 @@ import FilmTopView from '../view/film-top-view';
 import {remove, render, RenderPosition} from '../utils/render';
 import {FILM_CARD_COUNT} from '../main';
 import HeadingFilmList from '../view/heading-film-list-view';
+import MoviePresenter from './movie-presenter';
 
 const siteBodyElement = document.querySelector('body');
 
@@ -50,34 +51,8 @@ export default class MovieListPresenter {
 
 
   #renderFilm = (film) => {
-    const filmCardComponent = new FilmCardView(film);
-    const popupComponent = new FilmPopupView(film, COMMENTS_ARRAY);
-
-    const openPopup = () => {
-      render(siteBodyElement, popupComponent, RenderPosition.BEFOREEND);
-    };
-
-    const onEscKeyDown = (evt) => {
-      if (evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        remove(popupComponent);
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
-    };
-
-    filmCardComponent.setFilmCardClickHandler(() => {
-      openPopup();
-      siteBodyElement.classList.add('hide-overflow');
-      document.addEventListener('keydown', onEscKeyDown);
-    });
-
-    popupComponent.setPopupClickHandler(() => {
-      remove(popupComponent);
-      siteBodyElement.classList.remove('hide-overflow');
-      document.removeEventListener('keydown', onEscKeyDown);
-    });
-
-    render(this.#filmContainerComponent, filmCardComponent, RenderPosition.BEFOREEND);
+    const moviePresenter = new MoviePresenter(this.#filmListComponent);
+    moviePresenter.init(film);
   };
 
   #renderHeadingFilmList= () => {
