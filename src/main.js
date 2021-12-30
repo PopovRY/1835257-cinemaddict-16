@@ -36,3 +36,5 @@ render(siteFooterElement, new FilmsCountView(films.length), RenderPosition.BEFOR
 
 const movieListPresenter = new MovieListPresenter(siteMainElement);
 movieListPresenter.init(films);
+
+

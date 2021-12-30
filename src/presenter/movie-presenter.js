@@ -3,6 +3,7 @@ import FilmPopupView from '../view/film-popup-view';
 import {COMMENTS_ARRAY} from '../mock/structures';
 import {remove, render, RenderPosition} from '../utils/render';
 import FilmsListContainer from '../view/films-list-container';
+import {onEscKeyDown} from '../utils/utils';
 
 
 export default class MoviePresenter {
@@ -13,20 +14,12 @@ export default class MoviePresenter {
   #comments = COMMENTS_ARRAY;
   #filmContainerComponent = new FilmsListContainer();
 
-
-
-
-
-  #films = [];
-
-
-
-  constructor(container) {
-    this.#popupContainer = container;
+  constructor(popupContainer) {
+    this.#popupContainer = popupContainer;
   }
 
   init = (film) => {
-    this.#films = film;
+    this.#film = film;
 
     this.#filmCardComponent = new FilmCardView(film);
     this.#popupComponent = new FilmPopupView(film, this.#comments);
@@ -35,31 +28,31 @@ export default class MoviePresenter {
 
   }
 
-
-
   #openPopup = () => {
-    render(this.#popupContainer, this.#popupComponent, RenderPosition.BEFOREEND);
+    render( this.#popupContainer, this.#popupComponent, RenderPosition.BEFOREEND);
+    this.#popupContainer.classList.add('hide-overflow');
+    document.addEventListener('keydown', (evt) => {
+      onEscKeyDown(evt, this.#popupComponent,  this.#popupContainer);
+    });
   };
 
-  #onEscKeyDown = (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-      evt.preventDefault();
-      remove(this.#popupComponent);
-      document.removeEventListener('keydown', onEscKeyDown);
-    }
+  #closePopup = () => {
+    remove(this.#popupComponent);
+    this.#popupContainer.classList.remove('hide-overflow');
+    document.removeEventListener('keydown', (evt) => {
+      onEscKeyDown(evt, this.#popupComponent,  this.#popupContainer);
+    });
   };
 
-  filmCardComponent.setFilmCardClickHandler(() => {
-  openPopup();
-  siteBodyElement.classList.add('hide-overflow');
-  document.addEventListener('keydown', onEscKeyDown);
-});
+  #handleFilmCardClick = () => {
+    this.#openPopup();
+  }
 
-popupComponent.setPopupClickHandler(() => {
-  remove(popupComponent);
-  siteBodyElement.classList.remove('hide-overflow');
-  document.removeEventListener('keydown', onEscKeyDown);
-});
+  #handlePopupClick = () => {
+    this.#closePopup();
+  }
 
 
 }
+
+
