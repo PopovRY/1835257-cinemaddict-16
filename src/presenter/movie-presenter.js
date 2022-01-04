@@ -24,6 +24,9 @@ export default class MoviePresenter {
     this.#filmCardComponent = new FilmCardView(film);
     this.#popupComponent = new FilmPopupView(film, this.#comments);
 
+    this.#filmCardComponent.setFilmCardClickHandler(this.#handleFilmCardClick);
+    this.#popupComponent.setPopupClickHandler(this.#handlePopupClick);
+
     render(this.#filmContainerComponent, this.#filmCardComponent, RenderPosition.BEFOREEND);
 
   }

@@ -1,19 +1,15 @@
 import SortView from '../view/sort-view';
-import FilmCardView from '../view/film-card-view';
-import FilmPopupView from '../view/film-popup-view';
-import {COMMENTS_ARRAY} from '../mock/structures';
 import FilmsSectionView from '../view/films-section-view';
 import FilmListView from '../view/film-list-view';
 import FilmsListContainer from '../view/films-list-container';
 import ShowMoreButtonView from '../view/more-button-view';
 import FilmsListExtraView from '../view/films-list-extra-view';
 import FilmTopView from '../view/film-top-view';
-import {remove, render, RenderPosition} from '../utils/render';
+import {render, RenderPosition} from '../utils/render';
 import {FILM_CARD_COUNT} from '../main';
 import HeadingFilmList from '../view/heading-film-list-view';
 import MoviePresenter from './movie-presenter';
 
-const siteBodyElement = document.querySelector('body');
 
 export default class MovieListPresenter {
   #container = null;
