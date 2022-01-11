@@ -12,10 +12,10 @@ export default class MoviePresenter {
   #filmCardComponent = null;
   #popupComponent = null;
   #comments = COMMENTS_ARRAY;
-  #filmContainerComponent = new FilmsListContainer();
+  #filmContainerComponent = null;
 
-  constructor(popupContainer) {
-    this.#popupContainer = popupContainer;
+  constructor(filmContainerComponent) {
+    this.#filmContainerComponent = filmContainerComponent;
   }
 
   init = (film) => {

@@ -42,12 +42,11 @@ export default class MovieListPresenter {
     this.#renderFilmList(this.#films);
     this.#renderShowMoreButton();
     this.#renderHeadingFilmList();
-    this.#renderExtra();
   }
 
 
   #renderFilm = (film) => {
-    const moviePresenter = new MoviePresenter(this.#filmListComponent);
+    const moviePresenter = new MoviePresenter(this.#filmContainerComponent);
     moviePresenter.init(film);
   };
 

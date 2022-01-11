@@ -10,6 +10,8 @@ export const RenderPosition = {
 export const render = (container, element, place) => {
   const parent = container instanceof AbstractView ? container.element : container;
   const child = element instanceof AbstractView ? element.element : element;
+  console.log(parent);
+  console.log(child);
   switch (place) {
     case RenderPosition.BEFOREBEGIN:
       parent.before(child);
