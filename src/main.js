@@ -1,7 +1,7 @@
 import UserProfileView from './view/user-profile-view.js';
-import {COMMENTS_ARRAY, generateFilm} from './mock/structures.js';
+import {generateFilm} from './mock/structures.js';
 import {createFilter} from './filter.js';
-import {RenderPosition, render, remove} from './utils/render.js';
+import {RenderPosition, render} from './utils/render.js';
 import FilmsCountView from './view/films-count-view.js';
 import MainNavigationMenuView from './view/main-navigation-menu-view';
 import MainNavigationItemView from './view/main-navigation-item-view.js';
@@ -17,7 +17,6 @@ const filter = createFilter(films);
 
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
-const siteBodyElement = document.querySelector('body');
 const siteFooterElement = document.querySelector('footer');
 
 

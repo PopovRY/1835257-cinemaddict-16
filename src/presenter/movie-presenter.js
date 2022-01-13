@@ -12,10 +12,10 @@ export default class MoviePresenter {
   #filmCardComponent = null;
   #popupComponent = null;
   #comments = COMMENTS_ARRAY;
-  #filmContainerComponent = null;
+  #filmContainer = null;
 
-  constructor(filmContainerComponent) {
-    this.#filmContainerComponent = filmContainerComponent;
+  constructor(filmContainer) {
+    this.#filmContainer = filmContainer;
   }
 
   init = (film) => {
@@ -27,23 +27,21 @@ export default class MoviePresenter {
     this.#filmCardComponent.setFilmCardClickHandler(this.#handleFilmCardClick);
     this.#popupComponent.setPopupClickHandler(this.#handlePopupClick);
 
-    render(this.#filmContainerComponent, this.#filmCardComponent, RenderPosition.BEFOREEND);
+    render(this.#filmContainer, this.#filmCardComponent, RenderPosition.BEFOREEND);
 
   }
 
   #openPopup = () => {
-    render( this.#popupContainer, this.#popupComponent, RenderPosition.BEFOREEND);
-    this.#popupContainer.classList.add('hide-overflow');
+    render( this.#filmContainer, this.#popupComponent, RenderPosition.BEFOREEND);
     document.addEventListener('keydown', (evt) => {
-      onEscKeyDown(evt, this.#popupComponent,  this.#popupContainer);
+      onEscKeyDown(evt, this.#popupComponent,  this.#filmContainer);
     });
   };
 
   #closePopup = () => {
     remove(this.#popupComponent);
-    this.#popupContainer.classList.remove('hide-overflow');
     document.removeEventListener('keydown', (evt) => {
-      onEscKeyDown(evt, this.#popupComponent,  this.#popupContainer);
+      onEscKeyDown(evt, this.#popupComponent,  this.#filmContainer);
     });
   };
 
