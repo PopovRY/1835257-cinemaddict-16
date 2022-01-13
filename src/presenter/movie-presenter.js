@@ -2,20 +2,20 @@ import FilmCardView from '../view/film-card-view';
 import FilmPopupView from '../view/film-popup-view';
 import {COMMENTS_ARRAY} from '../mock/structures';
 import {remove, render, RenderPosition} from '../utils/render';
-import FilmsListContainer from '../view/films-list-container';
 import {onEscKeyDown, replace} from '../utils/utils';
 
 
 export default class MoviePresenter {
-  #popupContainer = null;
   #film = null;
   #filmCardComponent = null;
   #popupComponent = null;
   #comments = COMMENTS_ARRAY;
   #filmContainer = null;
+  #changeData = null;
 
-  constructor(filmContainer) {
+  constructor(filmContainer, changeData) {
     this.#filmContainer = filmContainer;
+    this.#changeData = changeData;
   }
 
   init = (film) => {
@@ -28,7 +28,14 @@ export default class MoviePresenter {
     this.#popupComponent = new FilmPopupView(film, this.#comments);
 
     this.#filmCardComponent.setFilmCardClickHandler(this.#handleFilmCardClick);
+    this.#filmCardComponent.setWatchlistClickHandler(this.#handleWatchlistClick);
+    this.#filmCardComponent.setHistoryClickHandler(this.#handleHistoryClick);
+    this.#filmCardComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
+
     this.#popupComponent.setPopupClickHandler(this.#handlePopupClick);
+    this.#popupComponent.setPopupWatchlistClickHandler(this.#handleWatchlistClick);
+    this.#popupComponent.setPopupHistoryClickHandler(this.#handleHistoryClick);
+    this.#popupComponent.setPopupFavoriteClickHandler(this.#handleFavoriteClick);
 
 
     if (prevFilmCardComponent === null || prevPopupComponent === null) {
@@ -46,6 +53,7 @@ export default class MoviePresenter {
     remove(prevFilmCardComponent);
     remove(prevPopupComponent);
   }
+
 
   destroy = () => {
     remove(this.#filmCardComponent);
@@ -72,6 +80,18 @@ export default class MoviePresenter {
 
   #handlePopupClick = () => {
     this.#closePopup();
+  }
+
+  #handleWatchlistClick = () => {
+    this.#changeData({...this.#film.userDetails, 'watchlist': !this.#film.userDetails.watchlist});
+  }
+
+  #handleHistoryClick = () => {
+    this.#changeData({...this.#film.userDetails, 'already_watched': !this.#film.userDetails.already_watched});
+  }
+
+  #handleFavoriteClick = () => {
+    this.#changeData({...this.#film.userDetails, 'favorite': !this.#film.userDetails.favorite});
   }
 
 

@@ -5,10 +5,11 @@ import FilmsListContainer from '../view/films-list-container';
 import ShowMoreButtonView from '../view/more-button-view';
 import FilmsListExtraView from '../view/films-list-extra-view';
 import FilmTopView from '../view/film-top-view';
-import {render, RenderPosition} from '../utils/render';
+import {remove, render, RenderPosition} from '../utils/render';
 import {FILM_CARD_COUNT} from '../main';
 import HeadingFilmList from '../view/heading-film-list-view';
 import MoviePresenter from './movie-presenter';
+import {updateItem} from '../utils/utils';
 
 
 export default class MovieListPresenter {
@@ -23,6 +24,7 @@ export default class MovieListPresenter {
   #filmsListExtraCommentedComponent = new FilmsListExtraView('Most commented');
   #filmTopRateComponent = new FilmTopView();
   #filmMostCommentedComponent = new FilmTopView();
+  #moviePresenter = new Map();
 
 
   #films = [];
@@ -46,8 +48,9 @@ export default class MovieListPresenter {
 
 
   #renderFilm = (film) => {
-    const moviePresenter = new MoviePresenter(this.#filmContainerComponent);
+    const moviePresenter = new MoviePresenter(this.#filmContainerComponent, this.#handleFilmChange);
     moviePresenter.init(film);
+    this.#moviePresenter.set(film.id, moviePresenter);
   };
 
   #renderHeadingFilmList= () => {
@@ -83,11 +86,23 @@ export default class MovieListPresenter {
       .forEach((film) => this.#renderFilm(film, this.#filmContainerComponent));
   }
 
+  #clearFilmList = () => {
+    this.#moviePresenter.forEach((presenter) => presenter.destroy());
+    this.#moviePresenter.clear();
+    this.#renderedFilmCount = FILM_CARD_COUNT;
+    remove(this.#showMoreButtonComponent);
+  }
+
   #renderFilmsLogic = () => {
     this.#renderFilms(0, Math.min(this.#films.length, FILM_CARD_COUNT));
     if (this.#films.length > FILM_CARD_COUNT) {
       this.#renderShowMoreButton();
     }
+  }
+
+  #handleFilmChange = (updatedFilm) => {
+    this.#films = updateItem(this.#films, updatedFilm);
+    this.#moviePresenter.get(updatedFilm.id).init(updatedFilm);
   }
 
 

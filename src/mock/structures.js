@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import {nanoid} from 'nanoid';
 
 const FILM_TITLES = [
   'Made for each other',
@@ -93,6 +94,7 @@ const getArrayRandomLength = (arr) => {
   return copyArray;
 };
 
+/*
 const createIdGenerator = () => {
   let lastGeneratedId = 0;
 
@@ -103,6 +105,7 @@ const createIdGenerator = () => {
 };
 
 const generateFilmId = createIdGenerator();
+*/
 
 const getCommentId = () => {
   const copyArray = COMMENTS_ARRAY.slice();
@@ -126,7 +129,7 @@ const getFilmPoster = (posters) => posters[getRandomInteger(0, posters.length - 
 
 export const generateFilm = () => (
   {
-    'id': generateFilmId().toString(),
+    'id': nanoid(),
     'comments': getCommentId(),
     'filmInfo': {
       'title': getTitle(FILM_TITLES),
