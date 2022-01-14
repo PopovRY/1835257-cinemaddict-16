@@ -78,8 +78,9 @@ export default class MoviePresenter {
     this.#openPopup();
   }
 
-  #handlePopupClick = () => {
+  #handlePopupClick = (film) => {
     this.#closePopup();
+    this.#changeData(film);
   }
 
   #handleWatchlistClick = () => {
@@ -87,7 +88,7 @@ export default class MoviePresenter {
   }
 
   #handleHistoryClick = () => {
-    this.#changeData({...this.#film.userDetails, 'already_watched': !this.#film.userDetails.already_watched});
+    this.#changeData({...this.#film.userDetails, 'alreadyWatched': !this.#film.userDetails.alreadyWatched});
   }
 
   #handleFavoriteClick = () => {
