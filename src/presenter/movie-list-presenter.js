@@ -9,7 +9,8 @@ import {remove, render, RenderPosition} from '../utils/render';
 import {FILM_CARD_COUNT} from '../main';
 import HeadingFilmList from '../view/heading-film-list-view';
 import MoviePresenter from './movie-presenter';
-import {updateItem} from '../utils/utils';
+import {sortByDate, sortByRating, updateItem} from '../utils/utils';
+import {SortType} from '../utils/const';
 
 
 export default class MovieListPresenter {
@@ -25,9 +26,11 @@ export default class MovieListPresenter {
   #filmTopRateComponent = new FilmTopView();
   #filmMostCommentedComponent = new FilmTopView();
   #moviePresenter = new Map();
+  #currentSortType = SortType.DEFAULT;
 
 
   #films = [];
+  #sourcedFilms = [];
   #renderedFilmCount = FILM_CARD_COUNT;
 
   constructor(container) {
@@ -36,6 +39,7 @@ export default class MovieListPresenter {
 
   init = (films) => {
     this.#films = [...films];
+    this.#sourcedFilms = [...films];
 
     render(this.#container, this.#sortComponent, RenderPosition.BEFOREEND);
     render(this.#container, this.#filmComponent, RenderPosition.BEFOREEND);
@@ -46,6 +50,19 @@ export default class MovieListPresenter {
     this.#renderHeadingFilmList();
   }
 
+  #clickSort = () => {
+    this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
+  }
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
+    this.#sortFilms(sortType);
+    this.#clearFilmList();
+    this.#renderFilmList();
+  }
 
   #renderFilm = (film) => {
     const moviePresenter = new MoviePresenter(this.#filmContainerComponent, this.#handleFilmChange);
@@ -58,10 +75,10 @@ export default class MovieListPresenter {
     render(this.#filmListComponent, headingFilmListComponent, RenderPosition.BEFOREEND);
   }
 
-  #renderFilmList = (films) => {
-    for (let i = 0; i < Math.min(films.length, this.#renderedFilmCount); i++) {
-      this.#renderFilm(films[i]);
-    }
+  #renderFilmList = () => {
+    this.#clickSort();
+    this.#renderHeadingFilmList();
+    this.#renderFilmsLogic();
   }
 
   #renderShowMoreButton = () => {
@@ -102,7 +119,23 @@ export default class MovieListPresenter {
 
   #handleFilmChange = (updatedFilm) => {
     this.#films = updateItem(this.#films, updatedFilm);
+    this.#sourcedFilms = updateItem(this.#sourcedFilms, updatedFilm);
     this.#moviePresenter.get(updatedFilm.id).init(updatedFilm);
+  }
+
+  #sortFilms = (sortType) => {
+    switch (sortType) {
+      case SortType.BY_DATE:
+        this.#films.sort(sortByDate);
+        break;
+      case SortType.BY_RATING:
+        this.#films.sort(sortByRating);
+        break;
+      default:
+        this.#films = [...this.#sourcedFilms];
+    }
+
+    this.#currentSortType = sortType;
   }
 
 

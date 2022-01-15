@@ -46,4 +46,8 @@ export const updateItem = (items, update) => {
   ];
 };
 
-export {getDate, getCorrectWord, onEscKeyDown, replace};
+const sortByDate = (filmA, filmB) => getDate(filmB.filmInfo.release.date, 'YYYY') - getDate(filmA.filmInfo.release.date, 'YYYY');
+
+const sortByRating = (filmA, filmB) => filmB.filmInfo.totalRating - filmA.filmInfo.totalRating;
+
+export {getDate, getCorrectWord, onEscKeyDown, replace, sortByDate, sortByRating};
