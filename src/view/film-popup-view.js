@@ -1,4 +1,3 @@
-//Подробная информация о фильме (попап)
 
 import {getDate, getCorrectWord} from '../utils/utils.js';
 import AbstractView from './abstract-view';
