@@ -67,7 +67,8 @@ export default class MoviePresenter {
     });
   };
 
-  #closePopup = () => {
+  #closePopup = (data) => {
+    this.#popupComponent.reset(data);
     remove(this.#popupComponent);
     document.removeEventListener('keydown', (evt) => {
       onEscKeyDown(evt, this.#popupComponent,  this.#filmContainer);

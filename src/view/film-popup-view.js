@@ -1,6 +1,7 @@
 
 import {getDate, getCorrectWord} from '../utils/utils.js';
 import AbstractView from './abstract-view';
+import SmartView from './smart-view';
 
 const renderFilmDetails = (name, value) => (
   `<tr class="film-details__row">
@@ -155,18 +156,32 @@ const createPopupTemplate = (film, comments) => {
 </section>`;
 };
 
-export default class FilmPopupView extends AbstractView{
+export default class FilmPopupView extends SmartView{
   #film = null;
   #comments = null;
 
   constructor(film, comments) {
     super();
-    this.#film = film;
+    this._data = FilmPopupView.parseFilmToData(film);
     this.#comments = comments;
   }
 
   get template(){
-    return createPopupTemplate(this.#film, this.#comments);
+    return createPopupTemplate(this._data, this.#comments);
+  }
+
+  reset = (film) => {
+    this.updateData(
+      FilmPopupView.parseFilmToData(film),
+    );
+  }
+
+  restoreHandlers = () => {
+    this.#setInnerHandlers();
+    this.setPopupClickHandler(this._callback.popupClick);
+    this.setPopupWatchlistClickHandler(this._callback.popupWatchlistClick);
+    this.setPopupHistoryClickHandler(this._callback.popupHistoryClick);
+    this.setPopupFavoriteClickHandler( this._callback.popupFavoriteClick);
   }
 
   setPopupClickHandler = (callback) => {
@@ -189,9 +204,28 @@ export default class FilmPopupView extends AbstractView{
     this.element.querySelector('.film-details__control-button--favorite').addEventListener('click', this.#popupFavoriteClickHandler);
   }
 
+  #setInnerHandlers = () => {
+    this.element.querySelector('.film-details__emoji-list').addEventListener('change', this.#emojiItemsClickHandler);
+    this.element.querySelector('.film-details__comment-input').addEventListener('input', this.#descriptionInputHandler);
+  };
+
+  #emojiItemsClickHandler = (evt) => {
+    this.updateData({
+      emojiIcon: evt.target.value,
+      checkedEmojiItem: evt.target.id,
+    });
+  }
+
+  #descriptionInputHandler = (evt) => {
+    this.element.querySelector('.film-details__comment-input').textContent = evt.target.value;
+    this.updateData({
+      comment: evt.target.value,
+    }, true);
+  }
+
   #popupClickHandler = (evt) => {
     evt.preventDefault();
-    this._callback.popupClick(this.#film);
+    this._callback.popupClick(FilmPopupView.parseDataToFilm(this._data));
   }
 
   #popupWatchlistClickHandler = (evt) => {
@@ -208,4 +242,21 @@ export default class FilmPopupView extends AbstractView{
     evt.preventDefault();
     this._callback.popupFavoriteClick();
   }
+
+  static parseFilmToData = (film) => ({...film,
+    emojiIcon: '',
+    checkedEmojiItem: '',
+    comment: '',
+    isDisabled: false,
+  });
+
+  static parseDataToFilm = (data) => {
+    const film = {...data};
+    delete film.emojiIcon;
+    delete film.checkedEmojiItem;
+    delete film.comment;
+    delete film.isDisabled;
+
+    return film;
+  };
 }
