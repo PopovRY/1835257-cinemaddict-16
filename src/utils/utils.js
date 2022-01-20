@@ -1,18 +1,9 @@
 import dayjs from 'dayjs';
-import {remove} from './render';
 import AbstractView from '../view/abstract-view';
 
 const getDate = (someDate, format) => dayjs(someDate).format(format);
 
 const getCorrectWord = (array, word) => array.length === 1 ? word : `${word}s`;
-
-const onEscKeyDown = (evt, component) => {
-  if (evt.key === 'Escape' || evt.key === 'Esc') {
-    evt.preventDefault();
-    remove(component);
-    document.removeEventListener('keydown', onEscKeyDown);
-  }
-};
 
 const replace = (newElement, oldElement) => {
   if (newElement === null || oldElement === null) {
@@ -49,4 +40,4 @@ const sortByDate = (filmA, filmB) => getDate(filmB.filmInfo.release.date, 'YYYY'
 
 const sortByRating = (filmA, filmB) => filmB.filmInfo.totalRating - filmA.filmInfo.totalRating;
 
-export {getDate, getCorrectWord, onEscKeyDown, replace, sortByDate, sortByRating};
+export {getDate, getCorrectWord, replace, sortByDate, sortByRating};

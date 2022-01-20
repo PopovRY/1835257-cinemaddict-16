@@ -2,7 +2,7 @@ import FilmCardView from '../view/film-card-view';
 import FilmPopupView from '../view/film-popup-view';
 import {COMMENTS_ARRAY} from '../mock/structures';
 import {remove, render, RenderPosition} from '../utils/render';
-import {onEscKeyDown, replace} from '../utils/utils';
+import {replace} from '../utils/utils';
 
 
 export default class MoviePresenter {
@@ -62,18 +62,20 @@ export default class MoviePresenter {
 
   #openPopup = () => {
     render( this.#filmContainer, this.#popupComponent, RenderPosition.BEFOREEND);
-    document.addEventListener('keydown', (evt) => {
-      onEscKeyDown(evt, this.#popupComponent,  this.#filmContainer);
-    });
+    document.addEventListener('keydown', this.#handleEscPopupKeyDown);
   };
 
   #closePopup = (data) => {
     this.#popupComponent.reset(data);
     remove(this.#popupComponent);
-    document.removeEventListener('keydown', (evt) => {
-      onEscKeyDown(evt, this.#popupComponent,  this.#filmContainer);
-    });
+    document.removeEventListener('keydown', this.#handleEscPopupKeyDown);
   };
+
+  #handleEscPopupKeyDown = (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      this.#closePopup();
+    }
+  }
 
   #handleFilmCardClick = () => {
     this.#openPopup();
